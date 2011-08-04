@@ -1,18 +1,22 @@
 // Processing code
 void setup() {
     float step = 20;
-    float cX = screen.width/2;
-    float cY = screen.height/2;
+    float swidth = 600;
+    float sheight = 600;
+    float cX = swidth/2;
+    float cY = sheight/2;
     
-    size(screen.width, screen.height);
+    size(swidth, sheight);
     background(0);
     stroke(65);
-    line(0, cY, screen.width, cY);
-    line(cX, 0, cX, screen.height);
+    line(0, cY, swidth, cY);
+    line(cX, 0, cX, sheight);
     stroke(255);
     
     float y = 0.0;
-    for (float x = -6.0; x < 6.0; x = x+.01) 
+    float x = 0.0;
+    float a = 3*sqrt(33)/7;
+    for (x = -8.0; x < 8.0; x = x+.01) 
     {
         //the flat line the top of the head
         y = 2.25*sqrt(abs((x-.5)*(x+.5))/((.5-x)*(.5+x)));
@@ -29,8 +33,16 @@ void setup() {
         //the bottom part
         y = abs(x/2)-(((3*sqrt(33)-7)/112)*sq(x))-3+sqrt(1-sq(abs(abs(x)-2)-1));
         ellipse(cX+(x*step), cY-(y*step), 1, 1);
-        //the sides
-        y = sqrt(sq((3*x)/7)*sqrt(abs(abs(x)-3)/(abs(x)-3))+9)
-        ellipse(cX+(x*step), cY-(y*step), 1, 1);
+        //the wings
+        y=3*sqrt(1-sq(x/7));
+        if(abs(x)>3)
+        {            
+            ellipse(cX+(x*step), cY-(y*step), 1, 1);
+            y=-y;
+            if(y>-a)
+            {
+                ellipse(cX+(x*step), cY-(y*step), 1, 1);
+            }
+        } 
     }
 }
